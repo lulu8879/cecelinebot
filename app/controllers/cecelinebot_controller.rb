@@ -34,6 +34,9 @@ class CecelinebotController < ApplicationController
     events = client.parse_events_from(body)
     events.each do |event|
       case event
+      when Line::Bot::Event::Postback
+        handle_postback(event)
+
       when Line::Bot::Event::Message
         handle_message(event)
 
@@ -46,6 +49,15 @@ class CecelinebotController < ApplicationController
       end
     end
     head :ok
+  end
+
+  def handle_postback(event)
+    case event['postback']['data'].downcase
+    when 'materi sem 1', 'materi sem 4', 'materi sem 5', 'materi sem 6', 'materi sem 7'
+      msg = 'Still in progress'
+      reply_text(event, msg)
+
+    end
   end
 
   def handle_message(event)
@@ -93,8 +105,10 @@ class CecelinebotController < ApplicationController
         help = 'List Commands : '
         help += "\nquote = random quote"
         help += "\nroll = test ur luck"
+        help += "\ntext/teks 'kalimat' = tulisan jd image"
         help += "\nchoose pilihan1 | pilihan2 = milih antara pilihan1 atau pilihan 2"
         help += "\nprofile = check profile line mu"
+        help += "\n/kuliah = info kuliah"
         help += "\n/dosen = list kontak dosen"
         help += "\n/help = list command"
         help += "\n/materisem2 = list materi sem 2"
@@ -153,10 +167,67 @@ class CecelinebotController < ApplicationController
         reply_content(event, msg)
 
       when 'quote'
-        uri = URI('https://talaikis.com/api/quotes/random/')
+        uri = URI('http://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=1')
         getquote = JSON.parse(Net::HTTP.get(uri))
-        quote = "#{getquote['quote']} (#{getquote['author']})"
-        reply_text(event, quote)
+        quote = getquote[0]['content']
+        quote = quote[3..(quote.index('.'))]
+        author = getquote[0]['title']
+        msg = "\"#{quote}\" \n-#{author}"
+        reply_text(event, msg)
+
+      when '/kuliah'
+        reply_content(event,
+                      type: 'template',
+                      altText: 'Menu Kuliah',
+                      template: {
+                        type: 'buttons',
+                        thumbnailImageUrl: 'https://via.placeholder.com/1024/000000/FFFFFF/?text=Info+Kuliah',
+                        title: 'Info Kuliah',
+                        text: 'Seputar dosen, materi, kalender akademik, dll',
+                        actions: [
+                          { label: 'Kalender Akademik', type: 'message', text: '/kalender' },
+                          { label: 'Kontak Dosen', type: 'message', text: '/dosen' },
+                          { label: 'Materi Kuliah', type: 'message', text: '/materi' },
+                          { label: 'Give me a quote!', type: 'message', text: 'quote' }
+                        ]
+                      })
+
+      when '/materi'
+        reply_content(event,
+                      type: 'template',
+                      altText: 'List Materi',
+                      template: {
+                        type: 'carousel',
+                        columns: [
+                          {
+                            title: 'Page 1',
+                            text: 'Materi Semester I, II, III',
+                            actions: [
+                              { label: 'Materi Sem I', type: 'postback', data: 'materi sem 1' },
+                              { label: 'Materi Sem II', type: 'message', text: '/materisem2' },
+                              { label: 'Materi Sem III', type: 'message', text: '/materisem3' }
+                            ]
+                          },
+                          {
+                            title: 'Page 2',
+                            text: 'Materi Semester IV, V, VI',
+                            actions: [
+                              { label: 'Materi Sem IV', type: 'postback', data: 'materi sem 4' },
+                              { label: 'Materi Sem V', type: 'postback', data: 'materi sem 5' },
+                              { label: 'Materi Sem VI', type: 'postback', data: 'materi sem 6' }
+                            ]
+                          },
+                          {
+                            title: 'Page 3',
+                            text: 'Materi Semester VII, VIII, IX',
+                            actions: [
+                              { label: 'Materi Sem VII', type: 'postback', data: 'materi sem 7' },
+                              { label: 'Materi Sem VIII', type: 'postback', data: 'materi sem 8' },
+                              { label: 'Materi Sem IX', type: 'postback', data: 'materi sem 9' }
+                            ]
+                          }
+                        ]
+                      })
 
       else
         case event_msg.split(' ').first
@@ -173,6 +244,16 @@ class CecelinebotController < ApplicationController
           msg = "Result : \n#{hasil1}% #{choose[0]}\n#{hasil2}% #{choose[1]}"
           msg += "\n\nConclusion : \nYou should choose #{better}"
           reply_text(event, msg)
+
+        when 'text', 'teks'
+          text = event_msg.split("#{event_msg.split(' ').first} ")[1].gsub(' ', '+')
+          tulis = "https://via.placeholder.com/600x100/000000/FFFFFF/?text=#{text}"
+          msg = {
+            type: 'image',
+            originalContentUrl: tulis.to_s,
+            previewImageUrl: tulis.to_s
+          }
+          reply_content(event, msg)
 
         end
         
