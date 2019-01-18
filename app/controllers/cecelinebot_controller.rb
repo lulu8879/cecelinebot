@@ -54,7 +54,7 @@ class CecelinebotController < ApplicationController
   def handle_postback(event)
     case event['postback']['data'].downcase
     when 'materi sem 1', 'materi sem 4', 'materi sem 5', 'materi sem 6', 'materi sem 7'
-      msg = 'Still in progress'
+      msg = 'Still in progress~'
       reply_text(event, msg)
 
     end
