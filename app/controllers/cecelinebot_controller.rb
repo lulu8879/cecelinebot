@@ -108,11 +108,13 @@ class CecelinebotController < ApplicationController
         help += "\ntext/teks 'kalimat' = tulisan jd image"
         help += "\nchoose pilihan1 | pilihan2 = milih antara pilihan1 atau pilihan 2"
         help += "\nprofile = check profile line mu"
+        help += "\nwaifu = sapakah waifu mu?"
         help += "\n/kuliah = info kuliah"
         help += "\n/dosen = list kontak dosen"
         help += "\n/help = list command"
         help += "\n/materisem2 = list materi sem 2"
         help += "\n/materisem3 = list materi sem 3"
+        help += "\n/fun = list fun stuff"
         reply_text(event, help)
 
       when '@bye'
@@ -175,6 +177,24 @@ class CecelinebotController < ApplicationController
         msg = "\"#{quote}\" \n-#{author}"
         reply_text(event, msg)
 
+      when 'waifu'
+        url = 'https://random-waifu-api-ror.herokuapp.com/random-waifu'
+        data = Net::HTTP.get(URI(url))
+        waifu = JSON.parse(data)
+        name = waifu['name']
+        image = waifu['imgwaifu']
+        reply_content(event,[
+                        {
+                          type: 'text',
+                          text: "Your Waifu is #{name}"
+                        },
+                        {
+                          type: 'image',
+                          originalContentUrl: image.to_s,
+                          previewImageUrl: image.to_s
+                        }
+                      ])
+
       when '/kuliah'
         reply_content(event,
                       type: 'template',
@@ -189,6 +209,23 @@ class CecelinebotController < ApplicationController
                           { label: 'Kontak Dosen', type: 'message', text: '/dosen' },
                           { label: 'Materi Kuliah', type: 'message', text: '/materi' },
                           { label: 'Give me a quote!', type: 'message', text: 'quote' }
+                        ]
+                      })
+
+      when '/fun'
+        reply_content(event,
+                      type: 'template',
+                      altText: 'Fun Stuff',
+                      template: {
+                        type: 'buttons',
+                        thumbnailImageUrl: 'https://via.placeholder.com/1024/000000/FFFFFF/?text=Fun+Stuff',
+                        title: 'Fun Stuff',
+                        text: "Let's play and have fun!",
+                        actions: [
+                          { label: 'Give me a quote!', type: 'message', text: 'quote' },
+                          { label: 'Test your luck!', type: 'message', text: 'roll' },
+                          { label: 'Who is ur waifu?', type: 'message', text: 'waifu' },
+                          { label: 'Who are you?', type: 'message', text: 'profile' }
                         ]
                       })
 
@@ -256,7 +293,7 @@ class CecelinebotController < ApplicationController
           reply_content(event, msg)
 
         end
-        
+
       end
 
     end
