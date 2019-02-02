@@ -47,7 +47,7 @@ Feel free to use
 
 7. Test it
     
-    ![Example Test]()
+    ![Example Test](https://github.com/lulu8879/cecelinebot/blob/master/example/Example_Test.png)
 
 ## Source
 * https://github.com/line/line-bot-sdk-ruby
