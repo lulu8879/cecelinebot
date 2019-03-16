@@ -53,7 +53,7 @@ class CecelinebotController < ApplicationController
 
   def handle_postback(event)
     case event['postback']['data'].downcase
-    when 'materi sem 1', 'materi sem 4', 'materi sem 5', 'materi sem 6', 'materi sem 7'
+    when 'materi sem 7'
       msg = 'Still in progress~'
       reply_text(event, msg)
 
@@ -112,8 +112,7 @@ class CecelinebotController < ApplicationController
         help += "\n/kuliah = info kuliah"
         help += "\n/dosen = list kontak dosen"
         help += "\n/help = list command"
-        help += "\n/materisem2 = list materi sem 2"
-        help += "\n/materisem3 = list materi sem 3"
+        help += "\n/materisemX = list materi sem X, gnti X dgn 1-7"
         help += "\n/fun = list fun stuff"
         reply_text(event, help)
 
@@ -129,26 +128,227 @@ class CecelinebotController < ApplicationController
 
         end
 
+      when '/materisem1'
+        reply_content(event,
+                      type: 'template',
+                      altText: 'List Materi Sem 1',
+                      template: {
+                        type: 'carousel',
+                        columns: [
+                          {
+                            title: 'Page 1',
+                            text: 'Materi Semester I',
+                            actions: [
+                              { label: 'Algo', type: 'uri', uri: 'http://bit.ly/2W3iHUX' },
+                              { label: 'Logika Informatika', type: 'uri', uri: 'http://bit.ly/2Y3Nm6y' },
+                              { label: 'Mtk Diskrit', type: 'uri', uri: 'http://bit.ly/2Y3NOlg' }
+                            ]
+                          },
+                          {
+                            title: 'Page 2',
+                            text: 'Materi Semester I',
+                            actions: [
+                              { label: 'Konsep Teknologi', type: 'uri', uri: 'http://bit.ly/2Y3NV0a' },
+                              { label: 'Empty', type: 'postback', data: 'null' },
+                              { label: 'Empty', type: 'postback', data: 'null' }
+                            ]
+                          },
+                          {
+                            title: 'Page 3',
+                            text: 'Materi Semester I',
+                            actions: [
+                                { label: 'PKn', type: 'uri', uri: 'http://bit.ly/2GMWOBY' },
+                                { label: 'Empty', type: 'postback', data: 'null' },
+                                { label: 'Empty', type: 'postback', data: 'null' }
+                            ]
+                          }
+                        ]
+                      })
+
       when '/materisem2'
-        msg = '1. Olahraga : http://bit.ly/2EwxQ86'
-        msg += "\n\n2. Statistika : http://bit.ly/2Ev0C9d"
-        msg += "\n\n3. Wimaya : http://bit.ly/2IDE6gM"
-        msg += "\n\n4. JarKom : http://bit.ly/2Hkp1Bm"
-        msg += "\n\n5. Algo : http://bit.ly/2GLQTNI"
-        msg += "\n\n6. KoMas : http://bit.ly/2EvETOj"
-        msg += "\n\n7. PKn : http://bit.ly/2GMWOBY"
-        reply_text(event, msg)
+        reply_content(event,
+                      type: 'template',
+                      altText: 'List Materi Sem 2',
+                      template: {
+                        type: 'carousel',
+                        columns: [
+                          {
+                            title: 'Page 1',
+                            text: 'Materi Semester II',
+                            actions: [
+                              { label: 'Olahraga', type: 'uri', uri: 'http://bit.ly/2EwxQ86' },
+                              { label: 'Statistika', type: 'uri', uri: 'http://bit.ly/2Ev0C9d' },
+                              { label: 'Wimaya', type: 'uri', uri: 'http://bit.ly/2IDE6gM' }
+                            ]
+                          },
+                          {
+                            title: 'Page 2',
+                            text: 'Materi Semester II',
+                            actions: [
+                              { label: 'JarKom', type: 'uri', uri: 'http://bit.ly/2Hkp1Bm' },
+                              { label: 'Algo Lanjut', type: 'uri', uri: 'http://bit.ly/2GLQTNI' },
+                              { label: 'KoMas', type: 'uri', uri: 'http://bit.ly/2EvETOj' }
+                            ]
+                          },
+                          {
+                            title: 'Page 3',
+                            text: 'Materi Semester II',
+                            actions: [
+                              { label: 'PKn', type: 'uri', uri: 'http://bit.ly/2GMWOBY' },
+                              { label: 'Empty', type: 'postback', data: 'null' },
+                              { label: 'Empty', type: 'postback', data: 'null' }
+                            ]
+                          }
+                        ]
+                      })
 
       when '/materisem3'
-        msg = '1. Struktur Data : http://bit.ly/2wfFstE'
-        msg += "\n\n2. PBO : http://bit.ly/2LemGrM"
-        msg += "\n\n3. Otomata dan PK : http://bit.ly/2Bxzuu0"
-        msg += "\n\n4. Matriks dan Ruang Vektor : http://bit.ly/2MtgqSI"
-        msg += "\n\n5. Riset Operasi : http://bit.ly/2DSQjR4"
-        msg += "\n\n6. SO : http://bit.ly/2P6PTbb"
-        msg += "\n\n7. STI : http://bit.ly/2IAabYa"
-        msg += "\n\n8. KoNum : http://bit.ly/2IAZVyK"
-        reply_text(event, msg)
+        reply_content(event,
+                      type: 'template',
+                      altText: 'List Materi Sem 3',
+                      template: {
+                        type: 'carousel',
+                        columns: [
+                          {
+                            title: 'Page 1',
+                            text: 'Materi Semester III',
+                            actions: [
+                              { label: 'Struktur Data', type: 'uri', uri: 'http://bit.ly/2wfFstE' },
+                              { label: 'PBO', type: 'uri', uri: 'http://bit.ly/2LemGrM' },
+                              { label: 'Matriks & RV', type: 'uri', uri: 'http://bit.ly/2MtgqSI' }
+                            ]
+                          },
+                          {
+                            title: 'Page 2',
+                            text: 'Materi Semester III',
+                            actions: [
+                              { label: 'Sistem Operasi', type: 'uri', uri: 'http://bit.ly/2P6PTbb' },
+                              { label: 'STI', type: 'uri', uri: 'http://bit.ly/2IAabYa' },
+                              { label: 'KoNum', type: 'uri', uri: 'http://bit.ly/2IAZVyK' }
+                            ]
+                          },
+                          {
+                            title: 'Page 3',
+                            text: 'Materi Semester III',
+                            actions: [
+                              { label: 'OPK', type: 'uri', uri: 'http://bit.ly/2Bxzuu0' },
+                              { label: 'Empty', type: 'postback', data: 'null' },
+                              { label: 'Empty', type: 'postback', data: 'null' }
+                            ]
+                          }
+                        ]
+                      })
+
+      when '/materisem4'
+        reply_content(event,
+                      type: 'template',
+                      altText: 'List Materi Sem 4',
+                      template: {
+                        type: 'carousel',
+                        columns: [
+                          {
+                            title: 'Page 1',
+                            text: 'Materi Semester IV',
+                            actions: [
+                              { label: 'Analisa Algo', type: 'uri', uri: 'http://bit.ly/2BiIIrg' },
+                              { label: 'Sistem Digital', type: 'uri', uri: 'http://bit.ly/2G36jk1' },
+                              { label: 'Basis Data', type: 'uri', uri: 'http://bit.ly/2DROdix' }
+                            ]
+                          },
+                          {
+                            title: 'Page 2',
+                            text: 'Materi Semester IV',
+                            actions: [
+                              { label: 'AOK', type: 'uri', uri: 'http://bit.ly/2IvhdRy' },
+                              { label: 'Geoinformatika', type: 'uri', uri: 'http://bit.ly/2SffPC8' },
+                              { label: 'IMK', type: 'uri', uri: 'http://bit.ly/2VPn71v' }
+                            ]
+                          },
+                          {
+                            title: 'Page 3',
+                            text: 'Materi Semester IV',
+                            actions: [
+                              { label: 'TPM', type: 'uri', uri: 'http://bit.ly/2HtgxK4' },
+                              { label: 'Empty', type: 'postback', data: 'null' },
+                              { label: 'Empty', type: 'postback', data: 'null' }
+                            ]
+                          }
+                        ]
+                      })
+
+      when '/materisem5'
+        reply_content(event,
+                      type: 'template',
+                      altText: 'List Materi Sem 5',
+                      template: {
+                        type: 'carousel',
+                        columns: [
+                          {
+                            title: 'Page 1',
+                            text: 'Materi Semester V',
+                            actions: [
+                              { label: 'Riset Operasi', type: 'uri', uri: 'http://bit.ly/2DSQjR4' },
+                              { label: 'Empty', type: 'postback', data: 'null' },
+                              { label: 'Empty', type: 'postback', data: 'null' }
+                            ]
+                          },
+                          {
+                            title: 'Page 2',
+                            text: 'Materi Semester V',
+                            actions: [
+                              { label: 'Empty', type: 'postback', data: 'null' },
+                              { label: 'Empty', type: 'postback', data: 'null' },
+                              { label: 'Empty', type: 'postback', data: 'null' }
+                            ]
+                          },
+                          {
+                            title: 'Page 3',
+                            text: 'Materi Semester V',
+                            actions: [
+                                { label: 'Empty', type: 'postback', data: 'null' },
+                                { label: 'Empty', type: 'postback', data: 'null' },
+                                { label: 'Empty', type: 'postback', data: 'null' }
+                            ]
+                          }
+                        ]
+                      })
+
+      when '/materisem6'
+        reply_content(event,
+                      type: 'template',
+                      altText: 'List Materi Sem 6',
+                      template: {
+                        type: 'carousel',
+                        columns: [
+                          {
+                            title: 'Page 1',
+                            text: 'Materi Semester VI',
+                            actions: [
+                              { label: 'ADBO', type: 'uri', uri: 'http://bit.ly/2V9ZjFi' },
+                              { label: 'Empty', type: 'postback', data: 'null' },
+                              { label: 'Empty', type: 'postback', data: 'null' }
+                            ]
+                          },
+                          {
+                            title: 'Page 2',
+                            text: 'Materi Semester VI',
+                            actions: [
+                              { label: 'Empty', type: 'postback', data: 'null' },
+                              { label: 'Empty', type: 'postback', data: 'null' },
+                              { label: 'Empty', type: 'postback', data: 'null' }
+                            ]
+                          },
+                          {
+                            title: 'Page 3',
+                            text: 'Materi Semester VI',
+                            actions: [
+                              { label: 'Empty', type: 'postback', data: 'null' },
+                              { label: 'Empty', type: 'postback', data: 'null' },
+                              { label: 'Empty', type: 'postback', data: 'null' }
+                            ]
+                          }
+                        ]
+                      })
 
       when '/dosen', '/kontak', 'contact'
         img = 'https://res.cloudinary.com/lulu8879/image/upload/v1544798426/9007158634518.jpg'
@@ -169,12 +369,23 @@ class CecelinebotController < ApplicationController
         reply_content(event, msg)
 
       when 'quote'
-        uri = URI('http://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=1')
-        getquote = JSON.parse(Net::HTTP.get(uri))
-        quote = getquote[0]['content']
-        quote = quote[3..(quote.index('.'))]
-        author = getquote[0]['title']
-        msg = "\"#{quote}\" \n-#{author}"
+        topics = %w[life motivational smile positive nature family love inspirational].sample
+        quote_url = "https://www.brainyquote.com/topics/#{topics}"
+        quote_data = Nokogiri::HTML(open(quote_url))
+        quotes = quote_data.css('.bq_center').css('.reflow_body').css('.reflow_container').css('.clearfix a').map do |a|
+          a['title'] == 'view quote' ? a.text : ''
+        end
+        authors = quote_data.css('.bq_center').css('.reflow_body').css('.reflow_container').css('.clearfix a').map do |a|
+          a['title'] == 'view author' ? a.text : ''
+        end
+        quotes.uniq!
+        authors.uniq!
+        quotes.delete_at(quotes.index(''))
+        authors.delete_at(authors.index(''))
+        random_number = rand(0..quotes.size)
+        quote = quotes[random_number]
+        author = authors[random_number]
+        msg = "\"#{quote}\" \n~ #{author}"
         reply_text(event, msg)
 
       when 'waifu'
@@ -208,7 +419,7 @@ class CecelinebotController < ApplicationController
                           { label: 'Kalender Akademik', type: 'message', text: '/kalender' },
                           { label: 'Kontak Dosen', type: 'message', text: '/dosen' },
                           { label: 'Materi Kuliah', type: 'message', text: '/materi' },
-                          { label: 'Give me a quote!', type: 'message', text: 'quote' }
+                          { label: 'Fun Stuff', type: 'message', text: '/fun' }
                         ]
                       })
 
@@ -240,7 +451,7 @@ class CecelinebotController < ApplicationController
                             title: 'Page 1',
                             text: 'Materi Semester I, II, III',
                             actions: [
-                              { label: 'Materi Sem I', type: 'postback', data: 'materi sem 1' },
+                              { label: 'Materi Sem I', type: 'message', text: '/materisem1' },
                               { label: 'Materi Sem II', type: 'message', text: '/materisem2' },
                               { label: 'Materi Sem III', type: 'message', text: '/materisem3' }
                             ]
@@ -249,18 +460,18 @@ class CecelinebotController < ApplicationController
                             title: 'Page 2',
                             text: 'Materi Semester IV, V, VI',
                             actions: [
-                              { label: 'Materi Sem IV', type: 'postback', data: 'materi sem 4' },
-                              { label: 'Materi Sem V', type: 'postback', data: 'materi sem 5' },
-                              { label: 'Materi Sem VI', type: 'postback', data: 'materi sem 6' }
+                              { label: 'Materi Sem IV', type: 'message', text: '/materisem4' },
+                              { label: 'Materi Sem V', type: 'message', text: '/materisem5' },
+                              { label: 'Materi Sem VI', type: 'message', text: '/materisem6' }
                             ]
                           },
                           {
                             title: 'Page 3',
-                            text: 'Materi Semester VII, VIII, IX',
+                            text: 'Materi Semester VII',
                             actions: [
                               { label: 'Materi Sem VII', type: 'postback', data: 'materi sem 7' },
-                              { label: 'Materi Sem VIII', type: 'postback', data: 'materi sem 8' },
-                              { label: 'Materi Sem IX', type: 'postback', data: 'materi sem 9' }
+                              { label: 'Empty', type: 'postback', data: 'null' },
+                              { label: 'Empty', type: 'postback', data: 'null' }
                             ]
                           }
                         ]

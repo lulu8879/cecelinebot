@@ -1,11 +1,12 @@
 # **LINE BOT Using Ruby on Rails**
 
 Try to create bot LINE using Ruby on Rails
+
 Feel free to use
 
 ## What I use
-* Ruby 2.5.3
-* Rails 5.2.2
+* Ruby 2.6.1
+* Rails 5.2.2.1
 * PostgreSQL
 
 ## How to use
