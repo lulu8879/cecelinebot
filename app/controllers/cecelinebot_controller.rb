@@ -157,7 +157,7 @@ class CecelinebotController < ApplicationController
                             title: 'Page 3',
                             text: 'Materi Semester I',
                             actions: [
-                                { label: 'PKn', type: 'uri', uri: 'http://bit.ly/2GMWOBY' },
+                                { label: 'Empty', type: 'postback', data: 'null' },
                                 { label: 'Empty', type: 'postback', data: 'null' },
                                 { label: 'Empty', type: 'postback', data: 'null' }
                             ]
@@ -325,7 +325,7 @@ class CecelinebotController < ApplicationController
                             text: 'Materi Semester VI',
                             actions: [
                               { label: 'ADBO', type: 'uri', uri: 'http://bit.ly/2V9ZjFi' },
-                              { label: 'Empty', type: 'postback', data: 'null' },
+                              { label: 'Grafkom', type: 'uri', uri: 'http://bit.ly/2Om7Hzh' },
                               { label: 'Empty', type: 'postback', data: 'null' }
                             ]
                           },
