@@ -617,7 +617,7 @@ class CecelinebotController < ApplicationController
             result = names.select { |e| e.include?(name) }
             msg = "======RESULT======"
             if result.empty?
-              msg += "\nData for %Q(#{name}) Can't be Found!"
+              msg += "\nData for \"#{name}\" Can't be Found!"
             else
               result.each_with_index do |e, i|
                 msg += "\n#{i+1}. #{data[names.index(e)]['NIM']} / #{e.split.map!(&:capitalize).join(" ")}"
