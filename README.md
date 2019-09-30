@@ -5,8 +5,8 @@ Try to create bot LINE using Ruby on Rails
 Feel free to use
 
 ## What I use
-* Ruby 2.6.1
-* Rails 5.2.2.1
+* Ruby 2.6.4 (Updated from 2.6.1)
+* Rails 5.2.3 (Updated from 5.2.2.1)
 * PostgreSQL
 
 ## How to use
@@ -52,3 +52,23 @@ Feel free to use
 
 ## Source
 * https://github.com/line/line-bot-sdk-ruby
+
+## Note:
+### How to Update Ruby Version Using rvm
+1. Check current ruby version that being used
+
+   ```
+   rvm list
+   ```
+2. Edit Gemfile or/and .ruby_version (if exists) and change the ver ruby  
+3. Change current version, ex: change to ver 2.6.4
+ 
+    ```
+    rvm use 2.6.4
+    ```
+    
+4. Update bundle and gem
+ 
+   ```
+   bundle update
+   ```

@@ -1,4 +1,6 @@
 require 'line/bot'
+require 'open-uri'
+require 'csv'
 
 class CecelinebotController < ApplicationController
   protect_from_forgery except: :callback
@@ -113,7 +115,9 @@ class CecelinebotController < ApplicationController
         help += "\n/dosen = list kontak dosen"
         help += "\n/help = list command"
         help += "\n/materisemX = list materi sem X, gnti X dgn 1-7"
+        help += "\n/matkulpilihan = list materi matkul pilihan"
         help += "\n/fun = list fun stuff"
+        help += "\nnim nama_mhs, ex: nim sakti = cari nim"
         reply_text(event, help)
 
       when '@bye'
@@ -157,9 +161,9 @@ class CecelinebotController < ApplicationController
                             title: 'Page 3',
                             text: 'Materi Semester I',
                             actions: [
-                                { label: 'Empty', type: 'postback', data: 'null' },
-                                { label: 'Empty', type: 'postback', data: 'null' },
-                                { label: 'Empty', type: 'postback', data: 'null' }
+                              { label: 'Empty', type: 'postback', data: 'null' },
+                              { label: 'Empty', type: 'postback', data: 'null' },
+                              { label: 'Empty', type: 'postback', data: 'null' }
                             ]
                           }
                         ]
@@ -288,26 +292,26 @@ class CecelinebotController < ApplicationController
                             text: 'Materi Semester V',
                             actions: [
                               { label: 'Riset Operasi', type: 'uri', uri: 'http://bit.ly/2DSQjR4' },
-                              { label: 'Empty', type: 'postback', data: 'null' },
-                              { label: 'Empty', type: 'postback', data: 'null' }
+                              { label: 'Kriptografi', type: 'uri', uri: 'http://bit.ly/2kpJr4M' },
+                              { label: 'RPL', type: 'uri', uri: 'http://bit.ly/2mp85mJ' }
                             ]
                           },
                           {
                             title: 'Page 2',
                             text: 'Materi Semester V',
                             actions: [
-                              { label: 'Empty', type: 'postback', data: 'null' },
-                              { label: 'Empty', type: 'postback', data: 'null' },
-                              { label: 'Empty', type: 'postback', data: 'null' }
+                              { label: 'SCPK', type: 'uri', uri: 'http://bit.ly/2m1l91D' },
+                              { label: 'Techno', type: 'uri', uri: 'http://bit.ly/2kTYOTe' },
+                              { label: 'IoT', type: 'uri', uri: 'http://bit.ly/2mF59CB' }
                             ]
                           },
                           {
                             title: 'Page 3',
                             text: 'Materi Semester V',
                             actions: [
-                                { label: 'Empty', type: 'postback', data: 'null' },
-                                { label: 'Empty', type: 'postback', data: 'null' },
-                                { label: 'Empty', type: 'postback', data: 'null' }
+                              { label: 'Empty', type: 'postback', data: 'null' },
+                              { label: 'Empty', type: 'postback', data: 'null' },
+                              { label: 'Empty', type: 'postback', data: 'null' }
                             ]
                           }
                         ]
@@ -350,8 +354,45 @@ class CecelinebotController < ApplicationController
                         ]
                       })
 
+      when '/matkulpilihan'
+        reply_content(event,
+                      type: 'template',
+                      altText: 'List Materi Matkul Pilihan',
+                      template: {
+                        type: 'carousel',
+                        columns: [
+                          {
+                            title: 'Page 1',
+                            text: 'List Materi Matkul Pilihan',
+                            actions: [
+                              { label: 'Peng. Citra', type: 'uri', uri: 'http://bit.ly/2m5JdQF' },
+                              { label: 'PJJ', type: 'uri', uri: 'http://bit.ly/2lXVDub' },
+                              { label: 'Peng. Pola', type: 'uri', uri: 'http://bit.ly/2o4u9UG' }
+                            ]
+                          },
+                          {
+                            title: 'Page 2',
+                            text: 'List Materi Matkul Pilihan',
+                            actions: [
+                              { label: 'Empty', type: 'postback', data: 'null' },
+                              { label: 'Empty', type: 'postback', data: 'null' },
+                              { label: 'Empty', type: 'postback', data: 'null' }
+                            ]
+                          },
+                          {
+                            title: 'Page 3',
+                            text: 'List Materi Matkul Pilihan',
+                            actions: [
+                              { label: 'Empty', type: 'postback', data: 'null' },
+                              { label: 'Empty', type: 'postback', data: 'null' },
+                              { label: 'Empty', type: 'postback', data: 'null' }
+                            ]
+                          }
+                        ]
+                      })
+
       when '/dosen', '/kontak', 'contact'
-        img = 'https://res.cloudinary.com/lulu8879/image/upload/v1544798426/9007158634518.jpg'
+        img = 'https://res.cloudinary.com/lulu8879/image/upload/v1544798426/Kuliah/list_dosen.jpg'
         msg = {
           type: 'image',
           originalContentUrl: img.to_s,
@@ -360,33 +401,94 @@ class CecelinebotController < ApplicationController
         reply_content(event, msg)
 
       when '/kalender'
-        img = 'https://res.cloudinary.com/lulu8879/image/upload/v1544797763/9007158213959.jpg'
-        msg = {
-            type: 'image',
-            originalContentUrl: img.to_s,
-            previewImageUrl: img.to_s
-        }
+        img = 'https://res.cloudinary.com/lulu8879/image/upload/v1562689489/Kuliah/jdwlTa2019-2020-ganjil.png'
+        img2 = 'https://res.cloudinary.com/lulu8879/image/upload/v1562689489/Kuliah/jdwlTa2019-2020-genap.png'
+        msg = [
+            {
+              type: 'image',
+              originalContentUrl: img.to_s,
+              previewImageUrl: img.to_s
+            },
+            {
+              type: 'image',
+              originalContentUrl: img2.to_s,
+              previewImageUrl: img2.to_s
+            }
+        ]
         reply_content(event, msg)
 
       when 'quote'
         topics = %w[life motivational smile positive nature family love inspirational].sample
         quote_url = "https://www.brainyquote.com/topics/#{topics}"
         quote_data = Nokogiri::HTML(open(quote_url))
-        quotes = quote_data.css('.bq_center').css('.reflow_body').css('.reflow_container').css('.clearfix a').map do |a|
-          a['title'] == 'view quote' ? a.text : ''
-        end
-        authors = quote_data.css('.bq_center').css('.reflow_body').css('.reflow_container').css('.clearfix a').map do |a|
-          a['title'] == 'view author' ? a.text : ''
-        end
-        quotes.uniq!
-        authors.uniq!
-        quotes.delete_at(quotes.index(''))
-        authors.delete_at(authors.index(''))
+
+        quotes = quote_data.css(".bq_center").css(".reflow_body").css(".reflow_container").css(".clearfix a").select { |a|
+          a if a['title'] == "view quote"
+        }.map { |a| a.text }
+
+        authors = quote_data.css(".bq_center").css(".reflow_body").css(".reflow_container").css(".clearfix a").select { |a|
+          a if a['title'] == "view author"
+        }.map { |a| a.text }
+
         random_number = rand(0..quotes.size)
         quote = quotes[random_number]
         author = authors[random_number]
         msg = "\"#{quote}\" \n~ #{author}"
         reply_text(event, msg)
+
+      when '/kuliah'
+        reply_content(event,
+                      type: 'template',
+                      altText: 'Menu Kuliah',
+                      template: {
+                          type: 'buttons',
+                          thumbnailImageUrl: 'https://via.placeholder.com/1024/000000/FFFFFF/?text=Info+Kuliah',
+                          title: 'Info Kuliah',
+                          text: 'Seputar dosen, materi, kalender akademik, dll',
+                          actions: [
+                              { label: 'Kalender Akademik', type: 'message', text: '/kalender' },
+                              { label: 'Kontak Dosen', type: 'message', text: '/dosen' },
+                              { label: 'Materi Kuliah', type: 'message', text: '/materi' },
+                              { label: 'Fun Stuff', type: 'message', text: '/fun' }
+                          ]
+                      })
+
+      when '/materi'
+        reply_content(event,
+                      type: 'template',
+                      altText: 'List Materi',
+                      template: {
+                          type: 'carousel',
+                          columns: [
+                              {
+                                  title: 'Page 1',
+                                  text: 'Materi Semester I, II, III',
+                                  actions: [
+                                      { label: 'Materi Sem I', type: 'message', text: '/materisem1' },
+                                      { label: 'Materi Sem II', type: 'message', text: '/materisem2' },
+                                      { label: 'Materi Sem III', type: 'message', text: '/materisem3' }
+                                  ]
+                              },
+                              {
+                                  title: 'Page 2',
+                                  text: 'Materi Semester IV, V, VI',
+                                  actions: [
+                                      { label: 'Materi Sem IV', type: 'message', text: '/materisem4' },
+                                      { label: 'Materi Sem V', type: 'message', text: '/materisem5' },
+                                      { label: 'Materi Sem VI', type: 'message', text: '/materisem6' }
+                                  ]
+                              },
+                              {
+                                  title: 'Page 3',
+                                  text: 'Materi Semester VII',
+                                  actions: [
+                                      { label: 'Materi Sem VII', type: 'postback', data: 'materi sem 7' },
+                                      { label: 'Matkul Pilihan', type: 'message', text: '/matkulpilihan' },
+                                      { label: 'Empty', type: 'postback', data: 'null' }
+                                  ]
+                              }
+                          ]
+                      })
 
       when 'waifu'
         url = 'https://random-waifu-api-ror.herokuapp.com/random-waifu'
@@ -503,6 +605,27 @@ class CecelinebotController < ApplicationController
           }
           reply_content(event, msg)
 
+        when 'nim'
+          data = CSV.parse(File.read('public/files/xxx.csv'), headers: true) #File Not Uploaded For Some Reason
+          name = event_msg.split
+          name.delete_at(0)
+          name = name.join(" ")
+          if name.length < 3
+            msg = "You can search by inputing 3 char or more~"
+          else
+            names = data['Nama Mahasiswa'].map!(&:downcase)
+            result = names.select { |e| e.include?(name) }
+            msg = "======RESULT======"
+            if result.empty?
+              msg += "\nData for %Q(#{name}) Can't be Found!"
+            else
+              result.each_with_index do |e, i|
+                msg += "\n#{i+1}. #{data[names.index(e)]['NIM']} / #{e.split.map!(&:capitalize).join(" ")}"
+              end
+            end
+          end
+
+          reply_text(event, msg)
         end
 
       end
