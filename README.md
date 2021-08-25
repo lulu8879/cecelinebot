@@ -1,4 +1,4 @@
-# **LINE BOT Using Ruby on Rails**
+# **LINE BOT Using Ruby on Rails (Discontinued / Outdated)**
 
 Try to create bot LINE using Ruby on Rails
 
